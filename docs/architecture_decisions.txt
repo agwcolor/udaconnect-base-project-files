@@ -1,3 +1,4 @@
+ARCHITECTURE DECISIONS
 
 ***********
 STARTER APP
@@ -20,28 +21,34 @@ In addition, it has a postgresql database and a react front end running in separ
 **************
 REFACTORED APP
 **************
+The refactored services each have their own repo under github.com/agwcolor :
+- udaconnect-base-project-files (deployment .yaml files, scripts, database, etc)
+- udaconnect-person-api,
+- udaconnect-connection-api,
+- udaconnect-location-api,
+- udaconnect-front-end
 
-Has 3 separate App services running in their own containers, as well as a Postgresql database service, Kafka service, and React Front end service running in separate containers.  6 containers total.
+The refactored app has 3 separate API services running in their own containers (persons, locations, connections), as well as a Postgresql database, Kafka, and React Front end services.  6 containers total.
 
 
 1. ==================== CONNECTION API SERVICE ====================
- 
-Contains a single endpoint: ( /persons/<person_id> connections) : Finds all people (Person) that are within a given distance of a given Person within a date range. 
-I chose to separate this into a separate app service running in it's own container implementing gRPC for faster message passing between the endpoint in controllers.py  and the find_contacts method in ConnectionService.  Since find_contacts will potentially run on a large dataset, I isolated it into its own container so that I could potentially scale and provision it separately, so that it wouldn't slow down other functionality.  
+
+Contains a single endpoint: ( /persons/<person_id> connections) : Finds all people (Person) that are within a given distance of a given Person within a date range.
+I chose to separate this into a separate app service running in it's own container implementing gRPC for faster message passing between the endpoint in controllers.py  and the find_contacts method in ConnectionService.  Since find_contacts will potentially run on a large dataset, I isolated it into its own container so that I could potentially scale and provision it separately, so that it wouldn't slow down other functionality.
 
 
 
 2. ==================== LOCATION API SERVICE ====================
 
-Responsible for retrieving location information from the database based on either a unique location id or all data.  It also will accept streaming data that is presumably constantly recorded in the location database via the people's phone locations. 
-Data includes : Creation Time, Latitude, Longitude, Unique ID of the Person, and the Location id. 
-Contains 2 enpoints : (/locations , /locations/<location_id>)
+Responsible for retrieving location information from the database based on either a unique location id or all data.  It also will accept streaming data that is presumably constantly recorded in the location database via the people's phone locations.
+Data includes : Creation Time, Latitude, Longitude, Unique ID of the Person, and the Location id.
+Contains 2 endpoints : (/locations , /locations/<location_id>)
 
-To handle the message passing between the streaming data and the database, I used Kafka. This way Kafka can buffer the data coming in so that too many messages don't hit the "create" database service in the LocationService (services.py).  The current implementation is a stub, and does ot actually commit data to the database. Instead, it creates the new Location() object with dummy data passed in from the endpoint (controllers .py).  (Note: The flask_restx Api generator web interface had problems with generating a response that satisfyied the schema definition (schemas.py), so the mentor suggested passing a dictionary instead.)  
+To handle the message passing between the streaming data and the database, I used Kafka. This way Kafka can buffer the data coming in so that too many messages don't hit the "create" database service in the LocationService (services.py).  The current implementation is a stub, and does ot actually commit data to the database. Instead, it creates the new Location() object with dummy data passed in from the endpoint (controllers .py).  (Note: The flask_restx Api generator web interface had problems with generating a response that satisfied the schema definition (schemas.py), so the mentor suggested passing a dictionary instead.)
 
 Since this service may have different provisioning and scaling requirements from the other services, I chose to isolate it.
 
-I separated the location service into 2 separate endpoints. 
+I separated the location service into 2 separate endpoints.
 /locations : (get) Retrieve all locations . (post) Add a new location.
 
 

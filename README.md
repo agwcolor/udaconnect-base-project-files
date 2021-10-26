@@ -82,8 +82,8 @@ Afterwards, you can test that `kubectl` works by running a command like `kubectl
 3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
 4. `kubectl apply -f deployment/kafka.yaml` - Setup and run kafka broker
 5. `kubectl apply -f deployment/udaconnect-person-api.yaml` - Set up the service and deployment for the person API
-6. `kubectl apply -f deployment/udaconnect-person-api.yaml` - Set up the service and deployment for the connection API
-7. `kubectl apply -f deployment/udaconnect-person-api.yaml` - Set up the service and deployment for the location API
+6. `kubectl apply -f deployment/udaconnect-connection-api.yaml` - Set up the service and deployment for the connection API
+7. `kubectl apply -f deployment/udaconnect-location-api.yaml` - Set up the service and deployment for the location API
 8. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
 9. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
 
@@ -92,8 +92,8 @@ Manually applying each of the individual `yaml` files is cumbersome but going th
 Note: The first time you run this project, you will need to seed the database with dummy data. Use the command `sh scripts/run_db_command.sh <POD_NAME>` against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`). Subsequent runs of `kubectl apply` for making changes to deployments or services shouldn't require you to seed the database again!
 
 ### Verifying it Works
-Once the project is up and running, you should be able to see 3 deployments and 3 services in Kubernetes:
-`kubectl get pods` and `kubectl get services` - should both return `udaconnect-app`, `udaconnect-api`, and `postgres`
+Once the project is up and running, you should be able to see deployments and services in Kubernetes:
+`kubectl get pods` and `kubectl get services` - `kafka-zookeeper, kafka, udaconnect-person-api, udaconnect-location-api, udaconnect-connection-api, udaconnect-react-frontend`, and `postgres`
 
 
 These pages should also load on your web browser:
@@ -111,6 +111,8 @@ Connections to the Kubernetes services have been set up through a [NodePort](htt
 
 ### New Services
 New services can be created inside of the `modules/` subfolder. You can choose to write something new with Flask, copy and rework the `modules/api` service into something new, or just create a very simple Python application.
+
+The refactored services each have their own repo: under github.com/agwcolor : udaconnect-base-project-files, udaconnect-person-api, udaconnect-connection-api, udaconnect-location-api, udaconnect-front-end.
 
 ### How to run locally
 #### Modify hard coded ports to run locally:
