@@ -19,7 +19,7 @@ To do so, ***you will refactor this application into a microservice architecture
 * [VirtualBox](https://www.virtualbox.org/) - Hypervisor allowing you to run multiple operating systems
 * [K3s](https://k3s.io/) - Lightweight distribution of K8s to easily develop against a local cluster
 
-## Running the app
+### Running the app
 The project has been set up such that you should be able to have the project up and running with Kubernetes.
 
 ### Prerequisites
@@ -75,13 +75,17 @@ Type `exit` to exit the virtual OS and you will find yourself back in your compu
 
 Afterwards, you can test that `kubectl` works by running a command like `kubectl describe services`. It should not return any errors.
 
-### Steps
+### Steps 
+#### Kubernetes deployment yaml are all located in agwcolor/udaconnect-base-project-files repo /deployment.
 1. `kubectl apply -f deployment/db-configmap.yaml` - Set up environment variables for the pods
 2. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
 3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
-4. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
-5. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
-6. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+4. `kubectl apply -f deployment/kafka.yaml` - Setup and run kafka broker
+5. `kubectl apply -f deployment/udaconnect-person-api.yaml` - Set up the service and deployment for the person API
+6. `kubectl apply -f deployment/udaconnect-person-api.yaml` - Set up the service and deployment for the connection API
+7. `kubectl apply -f deployment/udaconnect-person-api.yaml` - Set up the service and deployment for the location API
+8. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
+9. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
 
 Manually applying each of the individual `yaml` files is cumbersome but going through each step provides some context on the content of the starter project. In practice, we would have reduced the number of steps by running the command against a directory to apply of the contents: `kubectl apply -f deployment/`.
 
@@ -93,8 +97,9 @@ Once the project is up and running, you should be able to see 3 deployments and 
 
 
 These pages should also load on your web browser:
-* `http://localhost:30001/` - OpenAPI Documentation
-* `http://localhost:30001/api/` - Base path for API
+* `http://localhost:30001/` - OpenAPI Person Documentation
+* `http://localhost:30002/api/location` - OpenAPI Location
+* `http://localhost:30003/api/` - OpenAPI Connection
 * `http://localhost:30000/` - Frontend ReactJS Application
 
 #### Deployment Note
@@ -103,16 +108,108 @@ You may notice the odd port numbers being served to `localhost`. [By default, Ku
 Connections to the Kubernetes services have been set up through a [NodePort](https://kubernetes.io/docs/concepts/services-networking/service/#nodeport). (While we would use a technology like an [Ingress Controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) to expose our Kubernetes services in deployment, a NodePort will suffice for development.)
 
 ## Development
+
 ### New Services
 New services can be created inside of the `modules/` subfolder. You can choose to write something new with Flask, copy and rework the `modules/api` service into something new, or just create a very simple Python application.
 
+### How to run locally
+#### Modify hard coded ports to run locally:
+`
+frontend/src/components/
+	Connection.js localhost:5002   (Note: 30003 is for deployment)
+	Persons.js localhost:5000   (Note: 30001 is for deployment)
+location-api/wsgi.py
+	Add port=5003
+connection-api/wsgi.py
+	Add port=5002
+person-api
+	no change
+  `
+#### Verify Postgresql Database is up and running (port = 5432)
+% createdb geoconnections
+% psql
+% \ c geoconnections
+% CREATE EXTENSION postgis;  #this will add to spatial_ref_sys table, a standardized catalog of the spatial reference systems
+% \i 2020-08-15_init-db.sql
+`
+geoconnections=# \dt
+             List of relations
+ Schema |      Name       | Type  |  Owner  
+--------+-----------------+-------+---------
+ public | location        | table | Froggie
+ public | person          | table | Froggie
+ public | spatial_ref_sys | table | Froggie
+`
+% \i udaconnect_public_person.sql    #import data
+% \i udaconnect_public_location.sql  #import data
+% psql geoconnection
+% select * from person;
+% select * from location;
+
+#### Local environment vars: setup.sh for each module
+setup.sh -- Environment variables
+export CT_DB_USERNAME='postgres'
+export DB_USERNAME='postgres'
+export DB_NAME='geoconnections'
+export DB_HOST='localhost'
+export DB_PORT='5432'
+export DB_PASSWORD='xxxxxx'
+export CONFIG_NAME='dev'
+
+#### Start Zookeeper:
+% zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties
+
+#### Start Kafka :
+% kafka-server-start /usr/local/etc/kafka/server.properties
+
+#### Create Kafka topic
+$ /usr/local/bin/kafka-topics --create --topic connections --partitions 1 --replication-factor 1 --bootstrap-server  localhost:9092
+
+#### List Kafka topic to verify:
+/usr/local/bin/kafka-topics --bootstrap-server localhost:9092 --list
+
+#### Start person-api, location-api, connection-api in separate terminals
+% cd modules/xxxxx-api
+% source .venv/bin/activate
+% pip install --upgrade pip
+% pip install -r requirements.txt
+% source setup.sh  #env vars for local development
+% python3 wsgi.py  # to launch flask app
+
+#### 
 As a reminder, each module should have:
 1. `Dockerfile`
 2. Its own corresponding DockerHub repository
 3. `requirements.txt` for `pip` packages
 4. `__init__.py`
 
-### Docker Images
+#### Docker containerization
+# do this for each module: frontend, location API, person API, connection API.  Kafka is deployed via yaml.
+% docker build --no-cache -f Dockerfile -t agwcolor/udaconnect-react-frontend .
+% docker build --no-cache -f Dockerfile -t agwcolor/udaconnect-location-api .
+% docker build -f Dockerfile -t agwcolor/udaconnect-person-api .
+% docker build --no-cache -f Dockerfile -t agwcolor/udaconnect-connection-api .
+
+#### Push images to dockerhub. Example:
+% docker push agwcolor/udaconnect-react-frontend:latest
+
+#### Run container locally:
+% docker run -it -p 7111:3000 agwcolor/udaconnect-react-frontend:latest
+
+#### Kafka deployment details
+First install helm :
+% brew install kubernetes-helm
+% helm repo add bitnami https://charts.bitnami.com/bitnami
+% helm repo update
+
+Generate .yaml
+% helm template kafka bitnami/kafka \
+      --set volumePermissions.enabled=true \
+      --set zookeeper.volumePermissions.enabled=true \
+      > deployment/kafka.yaml
+
+
+### Docker Images for starter code
 `udaconnect-app` and `udaconnect-api` use docker images from `isjustintime/udaconnect-app` and `isjustintime/udaconnect-api`. To make changes to the application, build your own Docker image and push it to your own DockerHub repository. Replace the existing container registry path with your own.
 
 ## Configs and Secrets
@@ -130,6 +227,7 @@ This is okay for development against an exclusively local environment and we wan
 The database uses a plug-in named PostGIS that supports geographic queries. It introduces `GEOMETRY` types and functions that we leverage to calculate distance between `ST_POINT`'s which represent latitude and longitude.
 
 _You may find it helpful to be able to connect to the database_. In general, most of the database complexity is abstracted from you. The Docker container in the starter should be configured with PostGIS. Seed scripts are provided to set up the database table and some rows.
+
 ### Database Connection
 While the Kubernetes service for `postgres` is running (you can use `kubectl get services` to check), you can expose the service to connect locally:
 ```bash
