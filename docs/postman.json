@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "e731ce84-4cfe-469a-bb90-427d1ca2c178",
+		"name": "Udaconnect LocationAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add location (stub) - data hard-coded",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:30002/api/locations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5003",
+					"path": [
+						"api",
+						"locations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all locations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:30002/api/locations\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"api",
+								"locations\n"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "7452"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.16.1 Python/3.7.2"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 25 Oct 2021 06:03:50 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"longitude\": \"37.5534409999999994\",\n        \"id\": 29,\n        \"latitude\": \"-122.2905240000000049\",\n        \"person_id\": 1,\n        \"creation_time\": \"2020-08-18T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 30,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 5,\n        \"creation_time\": \"2020-08-15T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5534409999999994\",\n        \"id\": 31,\n        \"latitude\": \"-122.2905240000000049\",\n        \"person_id\": 5,\n        \"creation_time\": \"2020-08-15T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5534409999999994\",\n        \"id\": 32,\n        \"latitude\": \"-122.2905209999999983\",\n        \"person_id\": 1,\n        \"creation_time\": \"2020-08-15T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5534510000000026\",\n        \"id\": 33,\n        \"latitude\": \"-122.2905209999999983\",\n        \"person_id\": 1,\n        \"creation_time\": \"2020-08-19T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 34,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 6,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 36,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 1,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 37,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 1,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 38,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 1,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 39,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 1,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 40,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 1,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 41,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 1,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719565999999929\",\n        \"id\": 42,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 6,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719565999999929\",\n        \"id\": 43,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 6,\n        \"creation_time\": \"2020-07-06T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719565999999929\",\n        \"id\": 44,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 6,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5722575000000063\",\n        \"id\": 45,\n        \"latitude\": \"35.0585060000000013\",\n        \"person_id\": 6,\n        \"creation_time\": \"2020-07-05T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5721845000000059\",\n        \"id\": 46,\n        \"latitude\": \"35.0585639999999970\",\n        \"person_id\": 6,\n        \"creation_time\": \"2020-04-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5721845999999999\",\n        \"id\": 47,\n        \"latitude\": \"35.0585639999999970\",\n        \"person_id\": 6,\n        \"creation_time\": \"2020-05-01T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5721845000000059\",\n        \"id\": 48,\n        \"latitude\": \"35.0585639999999970\",\n        \"person_id\": 6,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5721845000000059\",\n        \"id\": 49,\n        \"latitude\": \"35.0585639999999970\",\n        \"person_id\": 8,\n        \"creation_time\": \"2020-07-07T10:38:06\"\n    },\n    {\n        \"longitude\": \"-106.5721845999999999\",\n        \"id\": 50,\n        \"latitude\": \"35.0585639999999970\",\n        \"person_id\": 8,\n        \"creation_time\": \"2020-07-07T10:38:06\"\n    },\n    {\n        \"longitude\": \"-106.5721845999999999\",\n        \"id\": 51,\n        \"latitude\": \"35.0585639999999970\",\n        \"person_id\": 8,\n        \"creation_time\": \"2020-07-01T10:38:06\"\n    },\n    {\n        \"longitude\": \"-106.5721845999999999\",\n        \"id\": 52,\n        \"latitude\": \"35.0585639999999970\",\n        \"person_id\": 9,\n        \"creation_time\": \"2020-07-01T10:38:06\"\n    },\n    {\n        \"longitude\": \"-106.5719565999999929\",\n        \"id\": 53,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 9,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719565999999929\",\n        \"id\": 54,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 9,\n        \"creation_time\": \"2019-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-105.5719565999999929\",\n        \"id\": 55,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 5,\n        \"creation_time\": \"2019-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-105.5719565999999929\",\n        \"id\": 56,\n        \"latitude\": \"34.0585135999999977\",\n        \"person_id\": 5,\n        \"creation_time\": \"2019-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 57,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 5,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719565999999929\",\n        \"id\": 58,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 8,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719565999999929\",\n        \"id\": 59,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 8,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719565999999929\",\n        \"id\": 60,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 8,\n        \"creation_time\": \"2020-07-06T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719560999999942\",\n        \"id\": 61,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 8,\n        \"creation_time\": \"2020-07-05T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719521000000043\",\n        \"id\": 62,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 8,\n        \"creation_time\": \"2020-01-05T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719521000000043\",\n        \"id\": 63,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 5,\n        \"creation_time\": \"2020-01-05T10:37:06\"\n    },\n    {\n        \"longitude\": \"-106.5719521000000043\",\n        \"id\": 64,\n        \"latitude\": \"35.0585135999999977\",\n        \"person_id\": 6,\n        \"creation_time\": \"2020-01-05T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 65,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 9,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 66,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 5,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 67,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 8,\n        \"creation_time\": \"2020-07-07T10:37:06\"\n    },\n    {\n        \"longitude\": \"37.5536299999999983\",\n        \"id\": 68,\n        \"latitude\": \"-122.2908829999999938\",\n        \"person_id\": 6,\n        \"creation_time\": \"2020-08-15T10:37:06\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get a single location",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5003/api/locations/29",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"api",
+								"locations",
+								"29"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "142"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/0.16.1 Python/3.7.2"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 25 Oct 2021 05:13:12 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"person_id\": 1,\n    \"latitude\": \"-122.290524\",\n    \"longitude\": \"37.553441\",\n    \"id\": 29,\n    \"creation_time\": \"2020-08-18T10:37:06\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add location (with params)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:30002/api/locations?id=29&person_id=5&longitude=\"37.553441\"&latitude=\"-122.290524\"&creation_time=2020-08-18T10:37:0",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5003",
+					"path": [
+						"api",
+						"locations"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "29"
+						},
+						{
+							"key": "person_id",
+							"value": "5"
+						},
+						{
+							"key": "longitude",
+							"value": "\"37.553441\""
+						},
+						{
+							"key": "latitude",
+							"value": "\"-122.290524\""
+						},
+						{
+							"key": "creation_time",
+							"value": "2020-08-18T10:37:0"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

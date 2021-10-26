@@ -1,0 +1,70 @@
+---
+openapi: 3.0.0
+info:
+  title: Location API
+  description: Udaconnect Location API
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/agwcolor/LocationAPI/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /locations:
+    get:
+      summary: Get all Locations
+      description: Get all Locations
+      operationId: get
+      responses:
+        "200":
+          description: successfully retrieved all Locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LocationSchema'
+        "400":
+          description: bad input parameter
+    post:
+      summary: adds a Location
+      description: Adds a Location to the system
+      operationId: post
+      requestBody:
+        description: Location to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationSchema'
+      responses:
+        "201":
+          description: Location created
+        "400":
+          description: invalid input, object invalid
+components:
+  schemas:
+    LocationSchema:
+      required:
+      - creation_time
+      - id
+      - latitude
+      - longitude
+      - person_id
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 29
+        person_id:
+          type: integer
+          example: 5
+        longitude:
+          type: string
+          format: longitude
+          example: "37.55363"
+        latitude:
+          type: string
+          format: latitude
+          example: "-122.290883"
+        creation_time:
+          type: string
+          format: datetime
+          example: 2020-07-07T10:37:06

@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: udaconnect-react-frontend
+  name: udaconnect-react-frontend
+spec:
+  ports:
+  - name: "3000"
+    port: 3000
+    targetPort: 3000
+    nodePort: 30000
+  selector:
+    service: udaconnect-react-frontend
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: udaconnect-react-frontend
+  name: udaconnect-react-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: udaconnect-react-frontend
+  template:
+    metadata:
+      labels:
+        service: udaconnect-react-frontend
+    spec:
+      containers:
+      - image: agwcolor/udaconnect-react-frontend:latest
+        name: udaconnect-react-frontend
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "64m"
+          limits:
+            memory: "500Mi"
+            cpu: "256m"
+
+      restartPolicy: Always
