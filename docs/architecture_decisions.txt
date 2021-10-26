@@ -30,6 +30,7 @@ The refactored services each have their own repo under github.com/agwcolor :
 
 The refactored app has 3 separate API services running in their own containers (persons, locations, connections), as well as a Postgresql database, Kafka, and React Front end services.  6 containers total.
 
+* Note : On Kubernetes only, the App container restarts over and over. I am currently trying to resolve this issue but got stuck. Please see the thread I opened here : https://knowledge.udacity.com/questions/723384 .
 
 1. ==================== CONNECTION API SERVICE ====================
 
@@ -39,6 +40,8 @@ I chose to separate this into a separate app service running in it's own contain
 
 
 2. ==================== LOCATION API SERVICE ====================
+
+* Note : Kafka does not seem to be connecting with the other services on Kubernetes. Please the thread I posted here : https://knowledge.udacity.com/questions/724729 . I am continuing to try to resolve this.
 
 Responsible for retrieving location information from the database based on either a unique location id or all data.  It also will accept streaming data that is presumably constantly recorded in the location database via the people's phone locations.
 Data includes : Creation Time, Latitude, Longitude, Unique ID of the Person, and the Location id.
