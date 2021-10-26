@@ -19,10 +19,10 @@ In addition, it has a postgresql database and a react front end running in separ
 
 
 **************
-REFACTORED APP
+REFACTORED APP - all modules in github.com/agwcolor
 **************
 The refactored services each have their own repo under github.com/agwcolor :
-- udaconnect-base-project-files (deployment .yaml files, scripts, database, etc)
+- udaconnect-base-project-files (deployment, docs, scripts, database, etc)
 - udaconnect-person-api,
 - udaconnect-connection-api,
 - udaconnect-location-api,
