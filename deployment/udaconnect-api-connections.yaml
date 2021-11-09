@@ -6,9 +6,9 @@ metadata:
   name: udaconnect-connection-api
 spec:
   ports:
-  - name: "5000"
-    port: 5000
-    targetPort: 5000
+  - name: "5005"
+    port: 5005
+    targetPort: 5005
     nodePort: 30003
   selector:
     service: udaconnect-connection-api
@@ -31,8 +31,8 @@ spec:
         service: udaconnect-connection-api
     spec:
       containers:
-      - image: agwcolor/udaconnect-connection-api:latest
-        name: udaconnect-connection-api
+      - image: agwcolor/udaconnect-connection-apiv2:latest
+        name: udaconnect-connection-apiv2
         imagePullPolicy: Always
         env:
         - name: DB_USERNAME

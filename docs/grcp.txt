@@ -1,13 +1,12 @@
 
-Please help:
+Udaconnect Connection API using grpc
 
-I implemented gRPC on the ConnectionService in the connection_api in controllers.py.  The service passes the message from the get endpoint to the backend database.  I was not able to figure out how to implement the endpoint in the React Front-End so it was hard to test that way.
+Exposed Endpoint via Kubernetes: localhost:30003/ConnectionService/GetConnection`
+I implemented gRPC on the ConnectionService in the connection_api defined in controllers.py.  The service passes the message from the grcp endpoint to the backend database via `controllers.py` & `services.py`.
 
-I tried to test the endpoint using the grpc cli, however in order to do that I would need to enable reflection in the controller.py.  However, I tried many times to import and implement grpcio-reflection, but it refused to run correctly. There was no mention on how to test this in the course. I also tried grpc_curl but that also requires reflection to be enabled. 
+You can curl the endpoint using grpcurl :
+`grpcurl -plaintext -d '{"person_id": 5, "start_date": "2020-1-1", "end_date": "2020-12-31", "meters": 5}' localhost:30003/ConnectionService/GetConnection`
 
-How do implement reflection correctly in python? Is this what is intended by this section of the rubric?
-
-Reference Error:
-% grpc_cli ls localhost:5005
->>Received an error when querying services endpoint.
->>Reflection request not implemented; is the ServerReflection service enabled?
+You can also use a client python file to connect with the endpoint using :
+`python3 writer.py`
+Located in: `connection2_api/grpc_connection_service/writer.py` 
