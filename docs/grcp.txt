@@ -1,12 +1,16 @@
 
-Udaconnect Connection API using grpc
+Udaconnect Connection API using gRPC
 
-Exposed Endpoint via Kubernetes: localhost:30003/ConnectionService/GetConnection`
-I implemented gRPC on the ConnectionService in the connection_api defined in controllers.py.  The service passes the message from the grcp endpoint to the backend database via `controllers.py` & `services.py`.
+
+I implemented gRPC on the ConnectionService in the connection_api defined in controllers.py.  The service passes the message from the grpc endpoint to the backend database via `controllers.py` & `services.py`.
+
+To access this endpoint from within the cluster from the deployed app you would use this ip : 10.43.255.199:5005 in the client.
+
+To access the exposed endpoint from outside of Kubernetes hosted on your localhost, use this address : http://localhost:30003/ConnectionService/GetConnection`
 
 You can curl the endpoint using grpcurl :
 `grpcurl -plaintext -d '{"person_id": 5, "start_date": "2020-1-1", "end_date": "2020-12-31", "meters": 5}' localhost:30003/ConnectionService/GetConnection`
 
 You can also use a client python file to connect with the endpoint using :
-`python3 writer.py`
-Located in: `connection2_api/grpc_connection_service/writer.py` 
+`python3 writer.py`.
+Located in: `connection2_api/grpc_connection_service/writer.py`
