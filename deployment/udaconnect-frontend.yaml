@@ -31,21 +31,8 @@ spec:
         service: udaconnect-app
     spec:
       containers:
-      
       - image: agwcolor/udaconnect-react-frontend:latest
         name: udaconnect-app
-        readinessProbe:
-          tcpSocket:
-            port: 3000
-          initialDelaySeconds: 60
-          periodSeconds: 5
-          successThreshold: 1
-          timeoutSeconds: 3
-        livenessProbe:
-          tcpSocket:
-            port: 3000
-          initialDelaySeconds: 60
-          periodSeconds: 20
         imagePullPolicy: Always
         resources:
           requests:
