@@ -2,7 +2,7 @@
 Udaconnect Connection API using gRPC
 
 
-I implemented gRPC on the ConnectionService in the connection_api defined in controllers.py.  The service passes the message from the grpc endpoint to the backend database via `controllers.py` & `services.py`.
+I implemented gRPC on the ConnectionService in the connection_api defined in controllers.py.  The service passes the message from the gRPC endpoint to the backend database via `controllers.py` & `services.py`.
 
 To access this endpoint from within the cluster from the deployed app you would use this ip : 10.43.255.199:5005 in the client.
 
