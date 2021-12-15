@@ -26,11 +26,11 @@ The refactored services each have their own repo under github.com/agwcolor :
 - udaconnect-person-api,
 - udaconnect-connection-api,
 - udaconnect-location-api,
+- udaconnect-kafka-consumer (for creating locations)
 - udaconnect-front-end
 
-The refactored app has 3 separate API services running in their own containers (persons, locations, connections), as well as a Postgresql database, Kafka, and React Front end services.  6 containers total.
-
-* Note : On Kubernetes only, the App container restarts over and over. I am currently trying to resolve this issue but got stuck. Please see the thread I opened here : https://knowledge.udacity.com/questions/723384 .
+The refactored app has 4 separate API services running in their own containers (persons, locations, connections, Kafka Consumer), as well containers running Postgresql database, Kafka, and React Front end services.
+7 containers total.
 
 1. ==================== CONNECTION API SERVICE ====================
 
@@ -38,25 +38,29 @@ Contains a single endpoint: ( /persons/<person_id> connections) : Finds all peop
 I chose to separate this into a separate app service running in it's own container implementing gRPC for faster message passing between the endpoint in controllers.py  and the find_contacts method in ConnectionService.  Since find_contacts will potentially run on a large dataset, I isolated it into its own container so that I could potentially scale and provision it separately, so that it wouldn't slow down other functionality.
 
 
-
 2. ==================== LOCATION API SERVICE ====================
-
-* Note : Kafka does not seem to be connecting with the other services on Kubernetes. Please the thread I posted here : https://knowledge.udacity.com/questions/724729 . I am continuing to try to resolve this.
 
 Responsible for retrieving location information from the database based on either a unique location id or all data.  It also will accept streaming data that is presumably constantly recorded in the location database via the people's phone locations.
 Data includes : Creation Time, Latitude, Longitude, Unique ID of the Person, and the Location id.
 Contains 2 endpoints : (/locations , /locations/<location_id>)
 
-To handle the message passing between the streaming data and the database, I used Kafka. This way Kafka can buffer the data coming in so that too many messages don't hit the "create" database service in the LocationService (services.py).  The current implementation is a stub, and does ot actually commit data to the database. Instead, it creates the new Location() object with dummy data passed in from the endpoint (controllers .py).  (Note: The flask_restx Api generator web interface had problems with generating a response that satisfied the schema definition (schemas.py), so the mentor suggested passing a dictionary instead.)
+To handle creating new locations using streaming data, I used a Kafka producer in the create method in LocationService. This way Kafka can buffer the data coming in so that too many messages don't hit the "create" database service in the LocationService (services.py).  The current implementation is a stub, and does ot actually commit data to the database. Instead, it creates the new Location() object with dummy data passed in from the endpoint (controllers .py).
+
+Later on the data will be retrieved by the "Kafka Consumer API Service" at regular intervals.  (The Kafka producer relies on the Kafka service.)
 
 Since this service may have different provisioning and scaling requirements from the other services, I chose to isolate it.
 
 I separated the location service into 2 separate endpoints.
 /locations : (get) Retrieve all locations . (post) Add a new location.
 
+(Note: The flask_restx Api generator web interface had problems with generating a response that satisfied the schema definition (schemas.py), so the mentor suggested passing a dictionary instead.)
 
 
-3. ==================== PERSON API SERVICE ====================
+3. ==================== KAFKA CONSUMER API SERVICE ====================
+
+Responsible for retrieving the messages sent by the Kafka Producer (in the Location Service API), deserializing them, and then committing them to the Postgres database. The Kafka Consumer relies on the Kafka service.
+
+4. ==================== PERSON API SERVICE ====================
 
 Responsible for adding and retrieving Person information. This service requires fewer resources and will be provisioned accordingly.
 
